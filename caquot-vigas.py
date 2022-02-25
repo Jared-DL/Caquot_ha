@@ -33,11 +33,11 @@ def definir_tramos_internos_externos():
     
 
 def definir_momento_apoyo():
-    global momento_apoyo
-    momento_apoyo =[]
-    print("""DEFINE MOMENTO EN LOS APOYOS""")
-    for i in range(1,n_barras+2):
-        momento_apoyo.append(float(input(f'Momento en el apoyo {i} KN*m=')))
+    # global momento_apoyo
+    # momento_apoyo =[]
+    # print("""DEFINE MOMENTO EN LOS APOYOS""")
+    # for i in range(1,n_barras+2):
+    #     momento_apoyo.append(float(input(f'Momento en el apoyo {i} KN*m=')))
     definir_cantidad_de_cargas()
 
 def definir_cantidad_de_cargas():
@@ -69,20 +69,25 @@ def calcular_giros():
     global giro_barra
     giro_barra =[]
     giro_barra.clear
-    for i in range(1,n_barras+1):
-        for j in range(0,cantidad_cargas[i-1]):
-            print(f"Barra {i} - carga {j}")
-            if tipo_cargas[i-1] == [26]:
-                print(tipo_cargas[i-1])
+    giro_en_1_barra = []
+    i=0
+    for j in tipo_cargas:
+        i+=1
+        print(f"cargas en barra {i}: {j}")
+        for n in j:
+            print(f"carga {j}")
+            if n == 26:
                 if tramo_i_e[i-1]==0:
-                    giro_barra.append(trapezoidal_interno())
+                   giro_en_1_barra.append(trapezoidal_interno())
                 elif tramo_i_e[i-1]==1:
-                    giro_barra.append(trapezoidal_externo())
-            elif tipo_cargas[i-1] == [19]:
+                   giro_en_1_barra.append(trapezoidal_externo())
+            elif n == 19:
                 if tramo_i_e[i-1]==0:
-                    giro_barra.append(puntual_interno())
+                   giro_en_1_barra.append(puntual_interno())
                 elif tramo_i_e[i-1]==1:
-                    giro_barra.append(puntual_externo())
+                   giro_en_1_barra.append(puntual_externo())  
+        giro_barra.append(copy.copy(giro_en_1_barra))
+        giro_en_1_barra.clear()
     print(giro_barra)
                 
 
@@ -98,7 +103,7 @@ def trapezoidal_externo():
     giro_izq=((l**(3))/(360))*(q2*(10*((b*(3*a+2*b))/(l**(2)))-15*(((b+a)/(l)))**(4)+3*(((b+a)**(5)-a**(5))/(b*l**(4))))+q1*(10*((b*(3*a+b))/(l**(2)))+15*(((a)/(l)))**(4)-3*(((b+a)**(5)-a**(5))/(b*l**(4)))))
     giros.append([giro_der,giro_izq])
     print(f" giros {giros} ")
-    return giros
+    return [giro_der,giro_izq]
 
 def puntual_externo():
     giros = []
@@ -114,7 +119,7 @@ def puntual_externo():
     giro_izq=((p*a*b)/(6*l))*(a+l)
     giros.append([giro_der,giro_izq])
     print(f" giros {giros} ")
-    return giros
+    return [giro_der,giro_izq]
 
 def trapezoidal_interno():
     giros = []
@@ -163,7 +168,7 @@ def trapezoidal_interno():
 
     giros.append([giro_der,giro_izq])
     print(f" giros {giros} ")
-    return giros
+    return [giro_der,giro_izq]
 
 def puntual_interno():
     giros = []
@@ -185,7 +190,7 @@ def puntual_interno():
     giro_izq=((p*a*b)/(6*l))*(a+l)
     giros.append([giro_der,giro_izq])
     print(f" giros {giros} ")
-    return giros
+    return [giro_der,giro_izq]
 
 def datos_trapezoidal():
     global a
