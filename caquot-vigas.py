@@ -73,7 +73,7 @@ def calcular_giros():
     i=0
     for j in tipo_cargas:
         i+=1
-        print(f"cargas en barra {i}: {j}")
+        print(f"***cargas en barra {i}: {j}***")
         for n in j:
             print(f"carga {j}")
             if n == 26:
@@ -93,17 +93,17 @@ def calcular_giros():
 
 def trapezoidal_externo():
     giros = []
-    a=float(input("a[m]="))
-    b=float(input("b[m]="))
-    c=float(input("c[m]="))
+    a=float(input("    a[m]="))
+    b=float(input("    b[m]="))
+    c=float(input("    c[m]="))
     l=a+b+c
-    q1=float(input("q1[kN]="))
-    q2=float(input("q2[kN]="))
+    q1=float(input("    q1[kN]="))
+    q2=float(input("    q2[kN]="))
     giro_der=((l**(3))/(360))*(q1*(10*((b*(3*c+2*b))/(l**(2)))-15*(((b+c)/(l)))**(4)+3*(((b+c)**(5)-c**(5))/(b*l**(4))))+q2*(10*((b*(3*c+b))/(l**(2)))+15*(((c)/(l)))**(4)-3*(((b+c)**(5)-c**(5))/(b*l**(4)))))
     giro_izq=((l**(3))/(360))*(q2*(10*((b*(3*a+2*b))/(l**(2)))-15*(((b+a)/(l)))**(4)+3*(((b+a)**(5)-a**(5))/(b*l**(4))))+q1*(10*((b*(3*a+b))/(l**(2)))+15*(((a)/(l)))**(4)-3*(((b+a)**(5)-a**(5))/(b*l**(4)))))
-    giros.append([giro_der,giro_izq])
-    print(f" giros {giros} ")
-    return [giro_der,giro_izq]
+    giros.append([-giro_der,giro_izq])
+    print(f"    giros {giros} ")
+    return [-giro_der,giro_izq]
 
 def puntual_externo():
     giros = []
@@ -111,30 +111,30 @@ def puntual_externo():
     global b
     global p
     global l
-    a=float(input("a[m]="))
-    b=float(input("b[m]="))
+    a=float(input("    a[m]="))
+    b=float(input("    b[m]="))
     l=a+b
-    p=float(input("q[kN]="))
+    p=float(input("    q[kN]="))
     giro_der=((p*a*b)/(6*l))*(b+l)
     giro_izq=((p*a*b)/(6*l))*(a+l)
-    giros.append([giro_der,giro_izq])
-    print(f" giros {giros} ")
-    return [giro_der,giro_izq]
+    giros.append([-giro_der,giro_izq])
+    print(f"    giros {giros} ")
+    return [-giro_der,giro_izq]
 
 def trapezoidal_interno():
     giros = []
-    a=float(input("a[m]="))
-    b=float(input("b[m]="))
-    c=float(input("c[m]="))
+    a=float(input("    a[m]="))
+    b=float(input("    b[m]="))
+    c=float(input("    c[m]="))
     l=a+b+c
-    q1=float(input("q1[kN]="))
-    q2=float(input("q2[kN]="))
+    q1=float(input("    q1[kN]="))
+    q2=float(input("    q2[kN]="))
     l_caquot= (a+b+c)*0.8
 
     if l_caquot>(a+b):
         a_f=a
         c_f=c-l+l_caquot
-        b_f=b_f
+        b_f=b
         q1_f=q1
         q2_f=q2
         giro_der=((l_caquot**(3))/(360))*(q1_f*(10*((b_f*(3*c_f+2*b_f))/(l_caquot**(2)))-15*(((b_f+c_f)/(l_caquot)))**(4)+3*(((b_f+c_f)**(5)-c_f**(5))/(b_f*l_caquot**(4))))+q2_f*(10*((b_f*(3*c_f+b_f))/(l_caquot**(2)))+15*(((c_f)/(l_caquot)))**(4)-3*(((b_f+c_f)**(5)-c_f**(5))/(b_f*l_caquot**(4)))))
@@ -144,8 +144,6 @@ def trapezoidal_interno():
         b_f=b-l+l_caquot+c
         q1_f=q1
         q2_f=q1_f+b_f/b*(q2-q1)
-
-        q2_inicial=q2
         q2=q2-c/b*(q2-q1)
         giro_der=((l_caquot**(3))/(360))*(q1_f*(10*((b_f*(3*c_f+2*b_f))/(l_caquot**(2)))-15*(((b_f+c_f)/(l_caquot)))**(4)+3*(((b_f+c_f)**(5)-c_f**(5))/(b_f*l_caquot**(4))))+q2_f*(10*((b_f*(3*c_f+b_f))/(l_caquot**(2)))+15*(((c_f)/(l_caquot)))**(4)-3*(((b_f+c_f)**(5)-c_f**(5))/(b_f*l_caquot**(4)))))
 
@@ -153,7 +151,7 @@ def trapezoidal_interno():
     if l_caquot>(c+b):
         a_f=b-l+l_caquot
         c_f=c
-        b_f=b_f
+        b_f=b
         q1_f=q1
         q2_f=q2
         giro_izq=((l_caquot**(3))/(360))*(q2_f*(10*((b_f*(3*a_f+2*b_f))/(l_caquot**(2)))-15*(((b_f+a_f)/(l_caquot)))**(4)+3*(((b_f+a_f)**(5)-a_f**(5))/(b_f*l_caquot**(4))))+q1_f*(10*((b_f*(3*a_f+b_f))/(l_caquot**(2)))+15*(((a_f)/(l_caquot)))**(4)-3*(((b_f+a_f)**(5)-a_f**(5))/(b_f*l_caquot**(4)))))
@@ -163,12 +161,12 @@ def trapezoidal_interno():
         b_f=b-l+l_caquot+a
         q1_f=q1_f+b_f/b*(q2-q1)
         q2_f=q2
-        q1=q1-a/b*(q1-q2)
+        q1_f=q1-a/b*(q1-q2)
         giro_izq=((l_caquot**(3))/(360))*(q2_f*(10*((b_f*(3*a_f+2*b_f))/(l_caquot**(2)))-15*(((b_f+a_f)/(l_caquot)))**(4)+3*(((b_f+a_f)**(5)-a_f**(5))/(b_f*l_caquot**(4))))+q1_f*(10*((b_f*(3*a_f+b_f))/(l_caquot**(2)))+15*(((a_f)/(l_caquot)))**(4)-3*(((b_f+a_f)**(5)-a_f**(5))/(b_f*l_caquot**(4)))))
 
-    giros.append([giro_der,giro_izq])
-    print(f" giros {giros} ")
-    return [giro_der,giro_izq]
+    giros.append([-giro_der,giro_izq])
+    print(f"    giros {giros} ")
+    return [-giro_der,giro_izq]
 
 def puntual_interno():
     giros = []
@@ -176,21 +174,24 @@ def puntual_interno():
     global b
     global p
     global l
-    a=float(input("a[m]="))
-    b=float(input("b[m]="))
+    a=float(input("    a[m]="))
+    b=float(input("    b[m]="))
     l=a+b
-    p=float(input("q[kN]="))
+    p=float(input("    q[kN]="))
     l_caquot= (a+b)*0.8
-    b_inicial=b
-    b=l_caquot-a
-    l=l_caquot
-    giro_der=((p*a*b)/(6*l))*(b+l)
-    b=b_inicial
-    a=l_caquot-b
-    giro_izq=((p*a*b)/(6*l))*(a+l)
-    giros.append([giro_der,giro_izq])
-    print(f" giros {giros} ")
-    return [giro_der,giro_izq]
+    b_f=l_caquot-a
+    a_f=l_caquot-b
+    giro_der=((p*a*b_f)/(6*l_caquot))*(b_f+l_caquot)
+    giro_izq=((p*a_f*b)/(6*l_caquot))*(a_f+l_caquot)
+
+    if a>l_caquot:
+        giro_der=0
+    elif b>l_caquot:
+        giro_izq=0
+
+    giros.append([-giro_der,giro_izq])
+    print(f"    giros {giros} ")
+    return [-giro_der,giro_izq]
 
 def datos_trapezoidal():
     global a
