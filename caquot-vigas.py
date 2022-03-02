@@ -1,4 +1,8 @@
 import copy
+from sympy import *
+
+x = Symbol('x')
+y = Symbol('y')
 
 def inicio():
     print(""" BIENVENIDO A CALCULO PARA VIGAS POR EL METODO DE CAQUOT
