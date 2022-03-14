@@ -1,8 +1,4 @@
 import copy
-from sympy import *
-
-x = Symbol('x')
-y = Symbol('y')
 
 def inicio():
     print(""" BIENVENIDO A CALCULO PARA VIGAS POR EL METODO DE CAQUOT
@@ -105,9 +101,9 @@ def trapezoidal_externo():
     q2=float(input("    q2[kN]="))
     giro_der=((l**(3))/(360))*(q1*(10*((b*(3*c+2*b))/(l**(2)))-15*(((b+c)/(l)))**(4)+3*(((b+c)**(5)-c**(5))/(b*l**(4))))+q2*(10*((b*(3*c+b))/(l**(2)))+15*(((c)/(l)))**(4)-3*(((b+c)**(5)-c**(5))/(b*l**(4)))))
     giro_izq=((l**(3))/(360))*(q2*(10*((b*(3*a+2*b))/(l**(2)))-15*(((b+a)/(l)))**(4)+3*(((b+a)**(5)-a**(5))/(b*l**(4))))+q1*(10*((b*(3*a+b))/(l**(2)))+15*(((a)/(l)))**(4)-3*(((b+a)**(5)-a**(5))/(b*l**(4)))))
-    giros.append([-giro_der,giro_izq])
+    giros.append([giro_der,-giro_izq])
     print(f"    giros {giros} ")
-    return [-giro_der,giro_izq]
+    return [giro_der,-giro_izq]
 
 def puntual_externo():
     giros = []
@@ -121,9 +117,9 @@ def puntual_externo():
     p=float(input("    q[kN]="))
     giro_der=((p*a*b)/(6*l))*(b+l)
     giro_izq=((p*a*b)/(6*l))*(a+l)
-    giros.append([-giro_der,giro_izq])
+    giros.append([giro_der,-giro_izq])
     print(f"    giros {giros} ")
-    return [-giro_der,giro_izq]
+    return [giro_der,-giro_izq]
 
 def trapezoidal_interno():
     giros = []
@@ -168,9 +164,9 @@ def trapezoidal_interno():
         q1_f=q1-a/b*(q1-q2)
         giro_izq=((l_caquot**(3))/(360))*(q2_f*(10*((b_f*(3*a_f+2*b_f))/(l_caquot**(2)))-15*(((b_f+a_f)/(l_caquot)))**(4)+3*(((b_f+a_f)**(5)-a_f**(5))/(b_f*l_caquot**(4))))+q1_f*(10*((b_f*(3*a_f+b_f))/(l_caquot**(2)))+15*(((a_f)/(l_caquot)))**(4)-3*(((b_f+a_f)**(5)-a_f**(5))/(b_f*l_caquot**(4)))))
 
-    giros.append([-giro_der,giro_izq])
+    giros.append([giro_der,-giro_izq])
     print(f"    giros {giros} ")
-    return [-giro_der,giro_izq]
+    return [giro_der,-giro_izq]
 
 def puntual_interno():
     giros = []
@@ -193,9 +189,9 @@ def puntual_interno():
     elif b>l_caquot:
         giro_izq=0
 
-    giros.append([-giro_der,giro_izq])
+    giros.append([giro_der,-giro_izq])
     print(f"    giros {giros} ")
-    return [-giro_der,giro_izq]
+    return [giro_der,-giro_izq]
 
 def datos_trapezoidal():
     global a
